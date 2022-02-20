@@ -2,6 +2,8 @@
 
 namespace EventRegistrationSystem.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class RoleController : Controller
     {
         private readonly ILogger<RoleController> _logger;
@@ -10,7 +12,7 @@ namespace EventRegistrationSystem.Controllers
             _logger = logger;
         }
 
-        [HttpPost(Name = "Create")]
+        [HttpPost("CreateRole")]
         public string Create(string roleName)
         {
             throw new NotImplementedException();

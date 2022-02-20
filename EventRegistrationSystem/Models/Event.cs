@@ -8,6 +8,7 @@ namespace EventRegistrationSystem.Models
         [Required]
         public string Id { get; set; }
         [Required]
+        [MaxLength(300)]
         public string Name { get; set; }
         [Required]
         public DateTime StartDate { get; set; }

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EventRegistrationSystem.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class UserController : Controller
     {
         private readonly ILogger<UserController> _logger;
@@ -11,13 +13,13 @@ namespace EventRegistrationSystem.Controllers
             _logger = logger;
         }
 
-        [HttpPost(Name = "Register")]
+        [HttpPost("Register")]
         public string Register(UserDto model)
         {
             throw new NotImplementedException();
         }
 
-        [HttpPost(Name = "Login")]
+        [HttpPost("Login")]
         public string Login(UserDto model)
         {
             throw new NotImplementedException();

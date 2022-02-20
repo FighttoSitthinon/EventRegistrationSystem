@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EventRegistrationSystem.Models
 {
@@ -8,18 +9,23 @@ namespace EventRegistrationSystem.Models
         [Required]
         public string Id { get; set; }
         [Required]
+        [MaxLength(10)]
         public string TicketNumber { get; set; }
         [Required]
+        [ForeignKey("Event")]
         public string EventId { get; set; }
+        [MaxLength(150)]
         public string? Email { get; set; }
+        [MaxLength(20)]
         public string? PhoneNumber { get; set; }
-        public string? UserId { get; set; }
         public bool IsActive { get; set; }
         public int IsDeleted { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
         public DateTime UpdatedDate { get; set; }
         public string UpdatedBy { get; set; }
+
+        public virtual Event Event { get; set; }
 
     }
 }

@@ -15,25 +15,25 @@ namespace EventRegistrationSystem.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "List")]
+        [HttpGet("ListEvent")]
         public IEnumerable<EventDto> List()
         {
            throw new NotImplementedException();
         }
 
-        [HttpGet(Name = "ListByDate")] // Admin Only
+        [HttpGet("ListByDate")] // Admin Only
         public IEnumerable<EventDto> ListByDate(DateTime start, DateTime end)
         {
             throw new NotImplementedException();
         }
 
-        [HttpGet(Name = "Get")]
+        [HttpGet("GetEvent")]
         public EventDto Get(string id)
         {
             throw new NotImplementedException();
         }
 
-        [HttpPost(Name = "Create")]
+        [HttpPost("CreateEvent")]
         public string Create(EventDto model)
         {
             throw new NotImplementedException();

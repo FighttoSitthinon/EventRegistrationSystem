@@ -15,11 +15,12 @@ namespace EventRegistrationSystem.Data
         public DbSet<Event> Events { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
-        public DbSet<Roles> Roles { get; set; }
+        public DbSet<Role> Roles { get; set; }
         public DbSet<UserRoles> UserRoles { get; set; }
 
         // CMD
         // Add-Migration [Migration Name] = create migration
         // Update-Database = Update migration into database
+        // Remove-Migration = Remove lastest Migration
     }
 }

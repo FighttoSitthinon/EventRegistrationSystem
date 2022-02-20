@@ -13,13 +13,13 @@ namespace EventRegistrationSystem.Controllers
             _logger = logger;
         }
 
-        [HttpPost(Name = "RegisterEvent")]
+        [HttpPost("RegisterEvent")]
         public string Create(TicketDto model)
         {
             throw new NotImplementedException();
         }
 
-        [HttpGet(Name = "List")]
+        [HttpGet("ListTicketByEvent")]
         public IEnumerable<TicketDto> List(string EventId)
         {
             throw new NotImplementedException();
