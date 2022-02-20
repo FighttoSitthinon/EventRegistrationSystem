@@ -1,6 +1,10 @@
-﻿using EventRegistrationSystem.Models;
-using Microsoft.AspNetCore.Http;
+﻿using EventRegistrationSystem.Data;
+using EventRegistrationSystem.Models;
+using EventRegistrationSystem.Repositories;
+using EventRegistrationSystem.Services;
+using EventRegistrationSystem.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace EventRegistrationSystem.Controllers
 {
@@ -8,35 +12,94 @@ namespace EventRegistrationSystem.Controllers
     [Route("[controller]")]
     public class EventController : Controller
     {
-
         private readonly ILogger<EventController> _logger;
-        public EventController(ILogger<EventController> logger)
+        private readonly IEventService eventService;
+
+        public EventController(ApplicationDbContext dbContext, ILogger<EventController> logger)
         {
             _logger = logger;
+            this.eventService = new EventService(dbContext);
         }
 
         [HttpGet("ListEvent")]
-        public IEnumerable<EventDto> List()
+        public IEnumerable<EventDto> List(int page = 1)
         {
-           throw new NotImplementedException();
+            try
+            {
+                var Event = eventService.Find(page);
+
+                return Event;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         [HttpGet("ListByDate")] // Admin Only
-        public IEnumerable<EventDto> ListByDate(DateTime start, DateTime end)
+        public IEnumerable<EventDto> ListByDate(int page = 1, DateTime? start = null, DateTime? end = null)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var Event = eventService.Find(page, start, end);
+
+                return Event;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         [HttpGet("GetEvent")]
         public EventDto Get(string id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (string.IsNullOrWhiteSpace(id)) return null;
+
+                var Event = eventService.Find(id);
+
+                return Event;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         [HttpPost("CreateEvent")]
-        public string Create(EventDto model)
+        public string Create(CreateEventDto model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (!ModelState.IsValid) throw new Exception();
+
+                string id = eventService.Create(model);
+
+                if (string.IsNullOrWhiteSpace(id)) throw new Exception();
+
+                return id;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost("UpdateEvent")]
+        public string Update(EventDto model)
+        {
+            try
+            {
+                string id = eventService.Create(model);
+                if (string.IsNullOrWhiteSpace(id)) throw new Exception();
+                return id;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace EventRegistrationSystem.Models
 {
-    public class EventDto
+    public class EventDto : CreateEventDto
     {
         public EventDto()
         {
@@ -19,6 +19,15 @@ namespace EventRegistrationSystem.Models
         }
 
         public string Id { get; set; }
+    }
+
+    public class CreateEventDto
+    {
+        public CreateEventDto()
+        {
+
+        }
+
         [Required]
         public string Name { get; set; }
         [Required]

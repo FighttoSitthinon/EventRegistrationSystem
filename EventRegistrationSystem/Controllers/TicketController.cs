@@ -19,8 +19,8 @@ namespace EventRegistrationSystem.Controllers
             throw new NotImplementedException();
         }
 
-        [HttpGet("ListTicketByEvent")]
-        public IEnumerable<TicketDto> List(string EventId)
+        [HttpGet("ListTicketByEventId")]
+        public IEnumerable<TicketDto> List(string id, int page = 1)
         {
             throw new NotImplementedException();
         }

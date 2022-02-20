@@ -13,14 +13,15 @@ namespace EventRegistrationSystem.Controllers
             _antiForgery = antiForgery;
         }
 
-        [HttpGet]
+        [HttpGet("/")]
         [IgnoreAntiforgeryToken]
         public IActionResult GenerateAntiForgeryTokens()
         {
             var tokens = _antiForgery.GetAndStoreTokens(HttpContext);
             Response.Cookies.Append("XSRF-REQUEST-TOKEN", tokens.RequestToken, new Microsoft.AspNetCore.Http.CookieOptions
             {
-                HttpOnly = false
+                HttpOnly = false,
+                Secure = true,
             });
             return NoContent();
         }
