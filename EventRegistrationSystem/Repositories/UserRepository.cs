@@ -5,29 +5,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventRegistrationSystem.Repositories
 {
-    public class EventRepository: IEventRepository, IDisposable
+    public class UserRepository: IUserRepository, IDisposable
     {
         private readonly ApplicationDbContext context;
-        private readonly DbSet<Event> repo;
-        public EventRepository(ApplicationDbContext db)
+        private readonly DbSet<User>  repo;
+        public UserRepository(ApplicationDbContext db)
         {
             this.context = db;
-            this.repo = this.context.Events;
+            this.repo = this.context.Users;
         }
 
-        public Event Get(string id) => repo.Where(x => x.Id == id && x.Status == (int)Status.Active).FirstOrDefault();
+        public User Get(string id) => repo.Where(x => x.Id == id && x.Status == (int)Status.Active).FirstOrDefault();
 
-        public IQueryable<Event> List(DateTime? start, DateTime? end)
-        {
-            var result =repo.Where(x => x.Status == (int)Status.Active);
-            if (start.HasValue && end.HasValue)
-            {
-                result.Where(x => x.StartDate >= start && x.EndDate <= end);
-            }
-            return result;
-        }
-
-        public void Create(Event model)
+        public void Create(User model)
         {
             model.CreatedBy = "Test";
             model.CreatedDate = DateTime.UtcNow;
@@ -36,7 +26,7 @@ namespace EventRegistrationSystem.Repositories
             repo.Add(model);
         }
 
-        public void Update(Event model)
+        public void Update(User model)
         {
             model.UpdatedBy = "Test";
             model.UpdatedDate = DateTime.UtcNow;

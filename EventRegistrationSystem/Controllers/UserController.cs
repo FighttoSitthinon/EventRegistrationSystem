@@ -1,4 +1,6 @@
-﻿using EventRegistrationSystem.Models.Dto;
+﻿using EventRegistrationSystem.Data;
+using EventRegistrationSystem.Models.Dto;
+using EventRegistrationSystem.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventRegistrationSystem.Controllers
@@ -8,9 +10,11 @@ namespace EventRegistrationSystem.Controllers
     public class UserController : Controller
     {
         private readonly ILogger<UserController> _logger;
-        public UserController(ILogger<UserController> logger)
+        private readonly IUserService userService;
+        public UserController(ApplicationDbContext dbContext, ILogger<UserController> logger)
         {
             _logger = logger;
+            this.userService = new UserService(dbContext);
         }
 
         [HttpPost("Register")]
@@ -20,7 +24,7 @@ namespace EventRegistrationSystem.Controllers
         }
 
         [HttpPost("Login")]
-        public string Login(UserDto model)
+        public string Login(LoginDto model)
         {
             throw new NotImplementedException();
         }
