@@ -18,13 +18,11 @@ namespace EventRegistrationSystem.Models
         public string? Email { get; set; }
         [MaxLength(20)]
         public string? PhoneNumber { get; set; }
-        public bool IsActive { get; set; }
-        public int IsDeleted { get; set; }
+        public int Status { get; set; }
         public DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
         public DateTime UpdatedDate { get; set; }
         public string UpdatedBy { get; set; }
-
         public virtual Event Event { get; set; }
 
     }

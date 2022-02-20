@@ -5,36 +5,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventRegistrationSystem.Repositories
 {
-    public class UserRepository: IUserRepository, IDisposable
+    public class RoleRepository : IRoleRepository, IDisposable
     {
         private readonly ApplicationDbContext context;
-        private readonly DbSet<User>  repo;
-        public UserRepository(ApplicationDbContext db)
+        private readonly DbSet<Role> repo;
+        public RoleRepository(ApplicationDbContext db)
         {
             this.context = db;
-            this.repo = this.context.Users;
+            this.repo = this.context.Roles;
         }
 
-        public User Get(string id) => repo.Where(x => x.Id == id && x.Status == (int)Status.Active).FirstOrDefault();
+        public Role GetById(string id) => repo.Where(x => x.Id == id).FirstOrDefault();
 
-        public User GetByEmail(string email) => repo.Where(x => x.Email == email.ToLower() && x.Status == (int)Status.Active).FirstOrDefault();
+        public Role GetByName(string name) => repo.Where(x => x.Name == name).FirstOrDefault();
 
-        public bool IsUserExisted(string email) => repo.Where(x => x.Email == email.ToLower() && x.Status == (int)Status.Active).Count() > 0;
-
-        public void Create(User model)
+        public void Create(Role model)
         {
-            model.CreatedBy = model.Email;
+            model.CreatedBy = "Test";
             model.CreatedDate = DateTime.UtcNow;
-            model.UpdatedBy = model.Email;
-            model.UpdatedDate = DateTime.UtcNow;
             repo.Add(model);
-        }
-
-        public void Update(User model)
-        {
-            model.UpdatedBy = "Test";
-            model.UpdatedDate = DateTime.UtcNow;
-            context.Entry(model).State = EntityState.Modified;
         }
 
         public void Save()
@@ -63,7 +52,6 @@ namespace EventRegistrationSystem.Repositories
             GC.SuppressFinalize(this);
         }
 
-        
         #endregion
     }
 }

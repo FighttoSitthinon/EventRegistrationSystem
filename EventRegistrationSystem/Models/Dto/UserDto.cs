@@ -9,8 +9,15 @@ namespace EventRegistrationSystem.Models.Dto
 
         }
 
+        public UserDto(User user, Role role)
+        {
+            Id = user.Id;
+            Role = role.Name;   
+            Email = user.Email;
+        }
+
         public string Id { get; set; }
-        public List<string> Roles { get; set; }
+        public string Role { get; set; }
     }
 
     public class LoginDto

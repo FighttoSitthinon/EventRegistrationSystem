@@ -16,7 +16,6 @@ namespace EventRegistrationSystem.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<UserRoles> UserRoles { get; set; }
 
         // CMD
         // Add-Migration [Migration Name] = create migration

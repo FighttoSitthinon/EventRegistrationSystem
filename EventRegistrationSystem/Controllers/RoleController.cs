@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EventRegistrationSystem.Data;
+using EventRegistrationSystem.Services;
+using EventRegistrationSystem.Services.IServices;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EventRegistrationSystem.Controllers
 {
@@ -7,15 +10,30 @@ namespace EventRegistrationSystem.Controllers
     public class RoleController : Controller
     {
         private readonly ILogger<RoleController> _logger;
-        public RoleController(ILogger<RoleController> logger)
+        private readonly IRoleService roleService;
+        public RoleController(ApplicationDbContext dbContext, ILogger<RoleController> logger)
         {
             _logger = logger;
+            this.roleService = new RoleService(dbContext);
         }
 
         [HttpPost("CreateRole")]
         public string Create(string roleName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (!ModelState.IsValid) throw new Exception();
+
+                string id = roleService.Create(roleName);
+
+                if (string.IsNullOrWhiteSpace(id)) throw new Exception();
+
+                return id;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
