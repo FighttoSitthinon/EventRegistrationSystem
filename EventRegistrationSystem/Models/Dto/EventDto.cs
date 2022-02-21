@@ -16,9 +16,13 @@ namespace EventRegistrationSystem.Models
             StartDate = model.StartDate;
             EndDate = model.EndDate;
             Description = model.Description;
+            Latitude = model.Latitude;
+            Longitude = model.Longitude;
+            GoogleMapUrl = "https://www.google.com/maps/dir/Current+Location/" + Latitude + "," + Longitude;
         }
 
         public string Id { get; set; }
+        public string GoogleMapUrl { get; set; }
     }
 
     public class CreateEventDto
@@ -35,5 +39,7 @@ namespace EventRegistrationSystem.Models
         [Required]
         public DateTime EndDate { get; set; }
         public string Description { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
     }
 }

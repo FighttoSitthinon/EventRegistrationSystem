@@ -16,6 +16,8 @@ namespace EventRegistrationSystem.Models
         public DateTime EndDate { get; set; }
         public string? Description { get; set; }
         public int Status { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
         public DateTime CreatedDate { get; set; }
         public string? CreatedBy { get; set; }
         public DateTime UpdatedDate { get; set; }

@@ -41,6 +41,8 @@ namespace EventRegistrationSystem.Services
                 Name = model.Name,
                 Description = model.Description,
                 Status = (int)Status.Active,
+                Latitude = model.Latitude,
+                Longitude = model.Longitude,
             };
 
             eventRepository.Create(Event);
@@ -57,6 +59,8 @@ namespace EventRegistrationSystem.Services
             Event.EndDate = model.EndDate;
             Event.Name = model.Name;
             Event.Description = model.Description;
+            Event.Latitude = model.Latitude;
+            Event.Longitude = model.Longitude;
             eventRepository.Update(Event);
             eventRepository.Save();
 
