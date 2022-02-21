@@ -76,8 +76,7 @@ namespace EventRegistrationSystem.Services.IServices
                 Email = model.Email.ToLower(),
                 PasswordSalt = salt,
                 PasswordHash = saltHash,
-                Status = (int)Status.Active,
-                RoleId = "USER"
+                Status = (int)Status.Active
             };
 
             userRepository.Create(user);

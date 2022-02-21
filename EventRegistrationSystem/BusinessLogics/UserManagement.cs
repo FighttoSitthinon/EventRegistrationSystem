@@ -27,7 +27,7 @@ namespace EventRegistrationSystem.BusinessLogics
                 {
                     new Claim("Id", user.Id),
                     new Claim("Email", user.Email),
-                    new Claim("Role", user.Role),
+                    //new Claim("Role", user.Role),
                 }),
 
                 Expires = now.AddMinutes(Convert.ToInt32(expireMinutes)),
@@ -54,7 +54,7 @@ namespace EventRegistrationSystem.BusinessLogics
 
                 user.Id = tokenS.Claims.First(claim => claim.Type == "Id").Value;
                 user.Email = tokenS.Claims.First(claim => claim.Type == "Email").Value;
-                user.Role = tokenS.Claims.First(claim => claim.Type == "Role").Value;
+                //user.Role = tokenS.Claims.First(claim => claim.Type == "Role").Value;
 
                 return user;
             }

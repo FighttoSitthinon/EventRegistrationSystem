@@ -3,6 +3,7 @@ using EventRegistrationSystem.Models;
 using EventRegistrationSystem.Repositories;
 using EventRegistrationSystem.Services;
 using EventRegistrationSystem.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -22,6 +23,7 @@ namespace EventRegistrationSystem.Controllers
         }
 
         [HttpGet("ListEvent")]
+        [AllowAnonymous]
         public IEnumerable<EventDto> List(int page = 1)
         {
             try
@@ -37,6 +39,7 @@ namespace EventRegistrationSystem.Controllers
         }
 
         [HttpGet("ListByDate")] // Admin Only
+        [Authorize]
         public IEnumerable<EventDto> ListByDate(int page = 1, DateTime? start = null, DateTime? end = null)
         {
             try
@@ -52,6 +55,7 @@ namespace EventRegistrationSystem.Controllers
         }
 
         [HttpGet("GetEvent")]
+        [Authorize]
         public EventDto Get(string id)
         {
             try
@@ -69,6 +73,7 @@ namespace EventRegistrationSystem.Controllers
         }
 
         [HttpPost("CreateEvent")]
+        [Authorize]
         public string Create(CreateEventDto model)
         {
             try
@@ -88,6 +93,7 @@ namespace EventRegistrationSystem.Controllers
         }
 
         [HttpPost("UpdateEvent")]
+        [Authorize]
         public string Update(EventDto model)
         {
             try

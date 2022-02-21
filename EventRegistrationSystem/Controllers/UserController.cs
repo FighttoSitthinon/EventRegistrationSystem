@@ -48,6 +48,12 @@ namespace EventRegistrationSystem.Controllers
 
                 if (string.IsNullOrWhiteSpace(Token)) throw new Exception();
 
+                Response.Cookies.Append("XSRF-REQUEST-TOKEN", Token, new Microsoft.AspNetCore.Http.CookieOptions
+                {
+                    HttpOnly = false,
+                    Secure = true,
+                });
+
                 return Token;
             }
             catch (Exception ex)
