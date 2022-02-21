@@ -7,6 +7,7 @@ namespace EventRegistrationSystem.Repositories.IRepositories
         Ticket Get(string id);
         IQueryable<Ticket> List(string eventId);
         void Create(Ticket model);
+        void Update(Ticket model);
         void Save();
     }
 }
