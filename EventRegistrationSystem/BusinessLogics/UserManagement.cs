@@ -27,8 +27,6 @@ namespace EventRegistrationSystem.BusinessLogics
                 new Claim(ClaimTypes.Email, user.Email),
             });
 
-            //user.Roles = new List<string> { "ADMIN", "EXHIBITOR" };
-
             foreach (var role in user.Roles)
             {
                 Claims.AddClaim(new Claim(ClaimTypes.Role, role));

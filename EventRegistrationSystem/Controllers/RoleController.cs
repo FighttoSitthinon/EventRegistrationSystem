@@ -55,5 +55,29 @@ namespace EventRegistrationSystem.Controllers
                 throw ex;
             }
         }
+
+        [HttpPost("AddRoleToCurrentUser")]
+        [Authorize]
+        public IActionResult AddRoleToCurrentUser(string id)
+        {
+            try
+            {
+                if (!ModelState.IsValid) throw new Exception();
+
+                var userName = User?.Identity?.Name;
+
+                if (string.IsNullOrEmpty(userName)) throw new Exception();
+
+                var roles = roleService.AddRole(id, userName);
+
+                 if (string.IsNullOrEmpty(userName)) throw new Exception();
+
+                return Ok(roles);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

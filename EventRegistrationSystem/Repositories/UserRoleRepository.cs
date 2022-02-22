@@ -21,12 +21,17 @@ namespace EventRegistrationSystem.Repositories
         {
             var userRoles = (
               from userRole in this.context.UserRoles 
-              where userRole.Id == UserId && userRole.Status == (int)Status.Active
+              where userRole.UserId == UserId && userRole.Status == (int)Status.Active
               join role in this.context.Roles on userRole.RoleId equals role.Id
               select role
             );
 
             return userRoles;
+        }
+
+        public bool IsDuplicateUserRole(string UserId, string RoleId)
+        {
+            return repo.Where(x => x.UserId == UserId && x.RoleId == RoleId && x.Status == (int)Status.Active).Any();
         }
 
         public void Create(UserRole model)
@@ -70,7 +75,6 @@ namespace EventRegistrationSystem.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
 
         #endregion
     }
