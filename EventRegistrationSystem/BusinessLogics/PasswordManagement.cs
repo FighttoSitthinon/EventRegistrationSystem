@@ -11,21 +11,22 @@ namespace EventRegistrationSystem.BusinessLogics
 
         public byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)
         {
-            HashAlgorithm algorithm = new SHA256Managed();
-
-            byte[] plainTextWithSaltBytes =
-              new byte[plainText.Length + salt.Length];
-
-            for (int i = 0; i < plainText.Length; i++)
+            using (var algorithm = new SHA256Managed())
             {
-                plainTextWithSaltBytes[i] = plainText[i];
-            }
-            for (int i = 0; i < salt.Length; i++)
-            {
-                plainTextWithSaltBytes[plainText.Length + i] = salt[i];
-            }
+                byte[] plainTextWithSaltBytes = new byte[plainText.Length + salt.Length];
 
-            return algorithm.ComputeHash(plainTextWithSaltBytes);
+                for (int i = 0; i < plainText.Length; i++)
+                {
+                    plainTextWithSaltBytes[i] = plainText[i];
+                }
+
+                for (int i = 0; i < salt.Length; i++)
+                {
+                    plainTextWithSaltBytes[plainText.Length + i] = salt[i];
+                }
+
+                return algorithm.ComputeHash(plainTextWithSaltBytes);
+            }
         }
 
         public bool CompareByteArrays(byte[] array1, byte[] array2)

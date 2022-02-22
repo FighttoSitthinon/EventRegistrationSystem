@@ -23,7 +23,6 @@ namespace EventRegistrationSystem.Controllers
         }
 
         [HttpGet("ListEvent")]
-        [AllowAnonymous]
         public IEnumerable<EventDto> List(int page = 1)
         {
             try
@@ -39,7 +38,7 @@ namespace EventRegistrationSystem.Controllers
         }
 
         [HttpGet("ListByDate")] // Admin Only
-        [Authorize]
+        [Authorize(Roles = "ADMIN")]
         public IEnumerable<EventDto> ListByDate(int page = 1, DateTime? start = null, DateTime? end = null)
         {
             try
@@ -55,7 +54,7 @@ namespace EventRegistrationSystem.Controllers
         }
 
         [HttpGet("GetEvent")]
-        [Authorize]
+        [Authorize(Roles = "ADMIN")]
         public EventDto Get(string id)
         {
             try
@@ -74,7 +73,7 @@ namespace EventRegistrationSystem.Controllers
 
         [HttpPost("CreateEvent")]
         [Authorize]
-        public string Create(CreateEventDto model)
+        public IActionResult Create(CreateEventDto model)
         {
             try
             {
@@ -84,7 +83,7 @@ namespace EventRegistrationSystem.Controllers
 
                 if (string.IsNullOrWhiteSpace(id)) throw new Exception();
 
-                return id;
+                return Ok(id);
             }
             catch (Exception ex)
             {
@@ -94,13 +93,13 @@ namespace EventRegistrationSystem.Controllers
 
         [HttpPost("UpdateEvent")]
         [Authorize]
-        public string Update(EventDto model)
+        public IActionResult Update(EventDto model)
         {
             try
             {
                 string id = eventService.Create(model);
                 if (string.IsNullOrWhiteSpace(id)) throw new Exception();
-                return id;
+                return Ok(id);
             }
             catch (Exception ex)
             {

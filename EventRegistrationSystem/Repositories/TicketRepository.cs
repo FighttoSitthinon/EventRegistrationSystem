@@ -17,6 +17,8 @@ namespace EventRegistrationSystem.Repositories
 
         public Ticket Get(string id) => repo.Where(x => x.Id == id && x.Status == (int)Status.Active).FirstOrDefault();
 
+        public Ticket GetByTicketNumber(string TicketNumber) => repo.Where(x => x.TicketNumber == TicketNumber && x.Status == (int)Status.Active).FirstOrDefault();
+
         public IQueryable<Ticket> List(string eventId) => repo.Where(x => x.Status == (int)Status.Active && x.EventId == eventId);
 
         public void Create(Ticket model)

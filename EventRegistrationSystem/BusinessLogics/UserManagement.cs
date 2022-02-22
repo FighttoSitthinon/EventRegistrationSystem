@@ -7,34 +7,40 @@ namespace EventRegistrationSystem.BusinessLogics
 {
     public class UserManagement
     {
-        private const string Secret = "QyZGKUhATWM5eSRCJkUoSHM1djh5L0I/WG4ycjV1OHhmVGpXblpyNE1iUWVUaFdtKEcrS2JQZVNBP0QqRy1LYTd4IUElRCpGcTR0N3cheiU=";
+        private readonly string Secret;
 
-        public UserManagement()
+        public UserManagement(IConfiguration configuration)
         {
-
+            Secret = configuration.GetSection("AppSettings:SecretKey").Value;
         }
-        
-        public string GenerateToken(UserDto user, int expireMinutes = 60)
+
+        public string GenerateToken(UserDto user, int day = 1)
         {
             var symmetricKey = Convert.FromBase64String(Secret);
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var now = DateTime.UtcNow;
+
+            var Claims = new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.Name, user.Email),
+                new Claim(ClaimTypes.Email, user.Email),
+            });
+
+            //user.Roles = new List<string> { "ADMIN", "EXHIBITOR" };
+
+            foreach (var role in user.Roles)
+            {
+                Claims.AddClaim(new Claim(ClaimTypes.Role, role));
+            }
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim("Id", user.Id),
-                    new Claim("Email", user.Email),
-                    //new Claim("Role", user.Role),
-                }),
+                Subject = Claims,
 
-                Expires = now.AddMinutes(Convert.ToInt32(expireMinutes)),
+                Expires = now.AddDays(day),
 
-                SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(symmetricKey),
-                    SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(symmetricKey), SecurityAlgorithms.HmacSha256Signature)
             };
 
             var stoken = tokenHandler.CreateToken(tokenDescriptor);
@@ -43,25 +49,25 @@ namespace EventRegistrationSystem.BusinessLogics
             return token;
         }
 
-        public UserDto DecodeJWTToken(string jwt)
-        {
-            UserDto user = new UserDto();
-            try
-            {
-                var handler = new JwtSecurityTokenHandler();
-                var jsonToken = handler.ReadToken(jwt);
-                var tokenS = jsonToken as JwtSecurityToken;
+        //public UserDto DecodeJWTToken(string jwt)
+        //{
+        //    UserDto user = new UserDto();
+        //    try
+        //    {
+        //        var handler = new JwtSecurityTokenHandler();
+        //        var jsonToken = handler.ReadToken(jwt);
+        //        var tokenS = jsonToken as JwtSecurityToken;
 
-                user.Id = tokenS.Claims.First(claim => claim.Type == "Id").Value;
-                user.Email = tokenS.Claims.First(claim => claim.Type == "Email").Value;
-                //user.Role = tokenS.Claims.First(claim => claim.Type == "Role").Value;
+        //        user.Id = tokenS.Claims.First(claim => claim.Type == "Id").Value;
+        //        user.Email = tokenS.Claims.First(claim => claim.Type == "Email").Value;
+        //        user.Role = tokenS.Claims.First(claim => claim.Type == "Role").Value;
 
-                return user;
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
+        //        return user;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return null;
+        //    }
+        //}
     }
 }

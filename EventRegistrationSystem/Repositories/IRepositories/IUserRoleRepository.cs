@@ -4,7 +4,7 @@ namespace EventRegistrationSystem.Repositories.IRepositories
 {
     public interface IUserRoleRepository: IDisposable
     {
-        IQueryable<UserRole> ListByUserId(string UserId);
+        IQueryable<Role> ListByUserId(string UserId);
         UserRole GetById(string id);
         void Create(UserRole model);
         void Update(UserRole model);

@@ -1,6 +1,7 @@
 ﻿using EventRegistrationSystem.Data;
 using EventRegistrationSystem.Services;
 using EventRegistrationSystem.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventRegistrationSystem.Controllers
@@ -18,7 +19,8 @@ namespace EventRegistrationSystem.Controllers
         }
 
         [HttpPost("CreateRole")]
-        public string Create(string roleName)
+        [Authorize]
+        public IActionResult Create(string roleName)
         {
             try
             {
@@ -28,7 +30,25 @@ namespace EventRegistrationSystem.Controllers
 
                 if (string.IsNullOrWhiteSpace(id)) throw new Exception();
 
-                return id;
+                return Ok(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost("GetAllRole")]
+        [Authorize]
+        public IActionResult GetAll()
+        {
+            try
+            {
+                if (!ModelState.IsValid) throw new Exception();
+
+                var roles = roleService.GetAll();
+
+                return Ok(roles);
             }
             catch (Exception ex)
             {

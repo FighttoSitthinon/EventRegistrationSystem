@@ -17,9 +17,15 @@ namespace EventRegistrationSystem.Repositories
 
         public UserRole GetById(string id) => repo.Where(x => x.Id == id && x.Status == (int)Status.Active).FirstOrDefault();
 
-        public IQueryable<UserRole> ListByUserId(string UserId)
+        public IQueryable<Role> ListByUserId(string UserId)
         {
-            var userRoles = repo.Where(x => x.UserId == UserId && x.Status == (int)Status.Active);
+            var userRoles = (
+              from userRole in this.context.UserRoles 
+              where userRole.Id == UserId && userRole.Status == (int)Status.Active
+              join role in this.context.Roles on userRole.RoleId equals role.Id
+              select role
+            );
+
             return userRoles;
         }
 

@@ -7,7 +7,8 @@ namespace EventRegistrationSystem.Services.IServices
         string CreateTicket(TicketRegisterDto model);
         string UpdateTicket(TicketDto model);
 
-        TicketDto Find(string Id);
+        TicketDto FindById(string Id);
+        TicketDto FindByTicketNumber(string TicketNumber);
         PagedList<TicketDto> List(string eventId, int page = 1);
     }
 }

@@ -15,9 +15,16 @@ namespace EventRegistrationSystem.Services
             this.ticketRepository = new TicketRepository(dbContext);
         }
 
-        public TicketDto Find(string Id)
+        public TicketDto FindById(string Id)
         {
             var ticket = ticketRepository.Get(Id);
+
+            return new TicketDto(ticket);
+        }
+
+        public TicketDto FindByTicketNumber(string TicketNumber)
+        {
+            var ticket = ticketRepository.GetByTicketNumber(TicketNumber);
 
             return new TicketDto(ticket);
         }
@@ -45,7 +52,7 @@ namespace EventRegistrationSystem.Services
 
             ticketRepository.Create(role);
             ticketRepository.Save();
-            return role.Id;
+            return role.TicketNumber;
         }
 
         public string UpdateTicket(TicketDto model)
@@ -59,7 +66,8 @@ namespace EventRegistrationSystem.Services
             ticketRepository.Update(ticket);
             ticketRepository.Save();
 
-            return ticket.Id;
+            return ticket.TicketNumber;
         }
+
     }
 }

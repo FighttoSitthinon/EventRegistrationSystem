@@ -2,6 +2,8 @@
 using EventRegistrationSystem.Data;
 using EventRegistrationSystem.Models.Dto;
 using EventRegistrationSystem.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventRegistrationSystem.Controllers
@@ -12,14 +14,14 @@ namespace EventRegistrationSystem.Controllers
     {
         private readonly ILogger<UserController> _logger;
         private readonly IUserService userService;
-        public UserController(ApplicationDbContext dbContext, ILogger<UserController> logger)
+        public UserController(ApplicationDbContext dbContext, IConfiguration configuration, ILogger<UserController> logger)
         {
             _logger = logger;
-            this.userService = new UserService(dbContext);
+            this.userService = new UserService(dbContext, configuration);
         }
 
         [HttpPost("Register")]
-        public string Register(LoginDto model)
+        public IActionResult Register(LoginDto model)
         {
             try
             {
@@ -29,7 +31,7 @@ namespace EventRegistrationSystem.Controllers
 
                 if (string.IsNullOrWhiteSpace(userId)) throw new Exception();
 
-                return userId;
+                return Ok(userId);
             }
             catch (Exception ex)
             {
@@ -38,7 +40,7 @@ namespace EventRegistrationSystem.Controllers
         }
 
         [HttpPost("Login")]
-        public string Login(LoginDto model)
+        public IActionResult Login(LoginDto model)
         {
             try
             {
@@ -48,27 +50,12 @@ namespace EventRegistrationSystem.Controllers
 
                 if (string.IsNullOrWhiteSpace(Token)) throw new Exception();
 
-                Response.Cookies.Append("XSRF-REQUEST-TOKEN", Token, new Microsoft.AspNetCore.Http.CookieOptions
-                {
-                    HttpOnly = false,
-                    Secure = true,
-                });
-
-                return Token;
+                return Ok(Token);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-        }
-
-        [HttpPost("Test")]
-        public bool TestJWT(string JWT)
-        {
-            UserManagement userManagement = new UserManagement();
-            var userData = userManagement.DecodeJWTToken(JWT);
-            if(userData == null) return false;
-            return true;
         }
     }
 }

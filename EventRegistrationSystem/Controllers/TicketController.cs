@@ -2,6 +2,7 @@
 using EventRegistrationSystem.Models.Dto;
 using EventRegistrationSystem.Services;
 using EventRegistrationSystem.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventRegistrationSystem.Controllers
@@ -18,14 +19,29 @@ namespace EventRegistrationSystem.Controllers
             this.ticketService = new TicketService(dbContext);
         }
 
-        [HttpGet("GetTicket")]
+        [HttpGet("GetTicketById")]
         public TicketDto Get(string Id)
         {
             try
             {
-                var Tickets = ticketService.Find(Id);
+                var Ticket = ticketService.FindById(Id);
 
-                return Tickets;
+                return Ticket;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpGet("GetTicketByTicketNumber")]
+        public TicketDto GetByTicketNumber(string TicketNumber)
+        {
+            try
+            {
+                var Ticket = ticketService.FindByTicketNumber(TicketNumber);
+
+                return Ticket;
             }
             catch (Exception ex)
             {
@@ -34,6 +50,7 @@ namespace EventRegistrationSystem.Controllers
         }
 
         [HttpGet("ListTicketByEventId")]
+        [Authorize(Roles = "ADMIN")]
         public IEnumerable<TicketDto> List(string EventId, int page = 1)
         {
             try
@@ -49,7 +66,7 @@ namespace EventRegistrationSystem.Controllers
         }
 
         [HttpPost("RegisterEvent")]
-        public string Create(TicketRegisterDto model)
+        public IActionResult Create(TicketRegisterDto model)
         {
             try
             {
@@ -57,11 +74,11 @@ namespace EventRegistrationSystem.Controllers
 
                 if (string.IsNullOrEmpty(model.Email) && string.IsNullOrEmpty(model.PhoneNumber)) throw new Exception("Email or Phone Number is Required.");
 
-                string id = ticketService.CreateTicket(model);
+                string TicketNumber = ticketService.CreateTicket(model);
 
-                if (string.IsNullOrWhiteSpace(id)) throw new Exception();
+                if (string.IsNullOrWhiteSpace(TicketNumber)) throw new Exception();
 
-                return id;
+                return Ok(TicketNumber);
             }
             catch (Exception ex)
             {

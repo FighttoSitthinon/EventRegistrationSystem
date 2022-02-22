@@ -32,5 +32,10 @@ namespace EventRegistrationSystem.Services
             roleName = roleName.ToUpper();
             return roleRepository.GetByName(roleName);
         }
+
+        public List<Role> GetAll()
+        {
+            return roleRepository.List().ToList();
+        }
     }
 }

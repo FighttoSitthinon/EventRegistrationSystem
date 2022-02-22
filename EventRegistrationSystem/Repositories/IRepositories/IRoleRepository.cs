@@ -6,6 +6,7 @@ namespace EventRegistrationSystem.Repositories.IRepositories
     {
         Role GetById(string id);
         Role GetByName(string id);
+        IQueryable<Role> List();
         void Create(Role model);
         void Save();
     }

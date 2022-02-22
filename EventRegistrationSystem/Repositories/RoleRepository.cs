@@ -19,9 +19,15 @@ namespace EventRegistrationSystem.Repositories
 
         public Role GetByName(string name) => repo.Where(x => x.Name == name).FirstOrDefault();
 
+        public IQueryable<Role> List()
+        {
+            var result = repo;
+            return result;
+        }
+
         public void Create(Role model)
         {
-            model.CreatedBy = "Test";
+            model.CreatedBy = null;
             model.CreatedDate = DateTime.UtcNow;
             repo.Add(model);
         }

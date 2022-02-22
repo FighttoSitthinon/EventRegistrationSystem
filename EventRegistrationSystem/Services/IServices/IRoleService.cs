@@ -6,5 +6,6 @@ namespace EventRegistrationSystem.Services.IServices
     {
         string Create(string roleName);
         Role Find(string roleName);
+        List<Role> GetAll();
     }
 }

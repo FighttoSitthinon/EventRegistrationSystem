@@ -14,9 +14,14 @@ namespace EventRegistrationSystem.Services.IServices
         public static User User = new User();
 
         public readonly IUserRepository userRepository;
-        public UserService(ApplicationDbContext dbContext)
+        public readonly IUserRoleRepository userRoleRepository;
+        private readonly IConfiguration configuration;
+
+        public UserService(ApplicationDbContext dbContext, IConfiguration configuration)
         {
             this.userRepository = new UserRepository(dbContext);
+            this.userRoleRepository = new UserRoleRepository(dbContext);
+            this.configuration = configuration;
         }
 
         public User GetById(string Id)
@@ -29,7 +34,7 @@ namespace EventRegistrationSystem.Services.IServices
         public string Login(LoginDto model)
         {
             var user = userRepository.GetByEmail(model.Email);
-            if (user == null) return null;
+            if (user == null) return string.Empty;
 
             byte[] plainText = Encoding.ASCII.GetBytes(model.Password);
 
@@ -37,11 +42,15 @@ namespace EventRegistrationSystem.Services.IServices
             var HashPassword = passwordManagement.GenerateSaltedHash(plainText, user.PasswordSalt);
 
             var IsSamePassword = passwordManagement.CompareByteArrays(HashPassword, user.PasswordHash);
-            if(!IsSamePassword) return null;
+            if(!IsSamePassword) return string.Empty;
 
-            UserDto userDto = new UserDto(user, new Role());
+            List<Role> roles = new List<Role>();
+            roles = userRoleRepository.ListByUserId(user.Id).ToList();
+
+            UserDto userDto = new UserDto(user, roles);
+
             // generate JWT
-            UserManagement userManagement = new UserManagement();
+            UserManagement userManagement = new UserManagement(configuration);
             var token = userManagement.GenerateToken(userDto);
 
             return token;
@@ -58,10 +67,10 @@ namespace EventRegistrationSystem.Services.IServices
             */
             string strRegex = @"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
             Regex re = new Regex(strRegex);
-            if (!re.IsMatch(model.Password)) return null;
+            if (!re.IsMatch(model.Password)) return string.Empty;
 
             bool IsUserExisted = userRepository.IsUserExisted(model.Email);
-            if (IsUserExisted) return null;
+            if (IsUserExisted) return string.Empty;
 
             string saltText = Guid.NewGuid().ToString().Replace("-", "");
             byte[] plainText = Encoding.ASCII.GetBytes(model.Password);
