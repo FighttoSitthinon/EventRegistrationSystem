@@ -11,11 +11,14 @@ namespace EventRegistrationSystem.Services
         public readonly IRoleRepository roleRepository;
         public readonly IUserRoleRepository userRoleRepository;
         public readonly IUserRepository userRepository;
-        public RoleService(ApplicationDbContext dbContext)
+
+        private readonly IHttpContextAccessor httpContextAccessor;
+        public RoleService(ApplicationDbContext dbContext, IHttpContextAccessor httpContextAccessor)
         {
             this.roleRepository = new RoleRepository(dbContext);
             this.userRoleRepository = new UserRoleRepository(dbContext);
             this.userRepository = new UserRepository(dbContext);
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public string AddRole(string roleId, string UserName)
@@ -29,6 +32,10 @@ namespace EventRegistrationSystem.Services
                 RoleId = roleId,
                 UserId = user.Id,
                 Status = (int)Status.Active,
+                CreatedBy = GetUserName(),
+                CreatedDate = DateTime.UtcNow,
+                UpdatedBy = GetUserName(),
+                UpdatedDate = DateTime.UtcNow,
             };
 
             bool IsDuplicate = userRoleRepository.IsDuplicateUserRole(model.UserId, model.RoleId);
@@ -46,6 +53,8 @@ namespace EventRegistrationSystem.Services
             {
                 Id = Guid.NewGuid().ToString().ToUpper(),
                 Name = roleName.ToUpper(),
+                CreatedBy = GetUserName(),
+                CreatedDate = DateTime.UtcNow,
             };
 
             roleRepository.Create(role);
@@ -63,5 +72,7 @@ namespace EventRegistrationSystem.Services
         {
             return roleRepository.List().ToList();
         }
+
+        private string GetUserName() => httpContextAccessor != null ? httpContextAccessor.HttpContext.User.Identity.Name : string.Empty;
     }
 }

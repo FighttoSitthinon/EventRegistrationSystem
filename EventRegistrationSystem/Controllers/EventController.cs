@@ -16,10 +16,10 @@ namespace EventRegistrationSystem.Controllers
         private readonly ILogger<EventController> _logger;
         private readonly IEventService eventService;
 
-        public EventController(ApplicationDbContext dbContext, ILogger<EventController> logger)
+        public EventController(ApplicationDbContext dbContext, IHttpContextAccessor httpContextAccessor, ILogger<EventController> logger)
         {
+            this.eventService = new EventService(dbContext, httpContextAccessor);
             _logger = logger;
-            this.eventService = new EventService(dbContext);
         }
 
         [HttpGet("ListEvent")]

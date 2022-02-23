@@ -10,9 +10,12 @@ namespace EventRegistrationSystem.Services
     public class TicketService : ITicketService
     {
         public readonly ITicketRepository ticketRepository;
-        public TicketService(ApplicationDbContext dbContext)
+        private readonly IHttpContextAccessor httpContextAccessor;
+
+        public TicketService(ApplicationDbContext dbContext, IHttpContextAccessor httpContextAccessor)
         {
             this.ticketRepository = new TicketRepository(dbContext);
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public TicketDto FindById(string Id)
@@ -62,12 +65,16 @@ namespace EventRegistrationSystem.Services
 
             ticket.PhoneNumber = model.PhoneNumber;
             ticket.Email = model.Email;
+            ticket.UpdatedDate = DateTime.UtcNow;
+            ticket.UpdatedBy = GetUserName();
 
             ticketRepository.Update(ticket);
             ticketRepository.Save();
 
             return ticket.TicketNumber;
         }
+
+        private string GetUserName() => httpContextAccessor != null ? httpContextAccessor.HttpContext.User.Identity.Name : string.Empty;
 
     }
 }

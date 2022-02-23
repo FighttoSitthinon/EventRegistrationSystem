@@ -32,8 +32,6 @@ namespace EventRegistrationSystem.Repositories
 
         public void Update(Ticket model)
         {
-            model.UpdatedBy = "Test";
-            model.UpdatedDate = DateTime.UtcNow;
             context.Entry(model).State = EntityState.Modified;
         }
 

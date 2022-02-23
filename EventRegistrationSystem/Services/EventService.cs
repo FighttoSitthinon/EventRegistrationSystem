@@ -10,9 +10,12 @@ namespace EventRegistrationSystem.Services
     public class EventService: IEventService
     {
         public readonly IEventRepository eventRepository;
-        public EventService(ApplicationDbContext dbContext)
+        private readonly IHttpContextAccessor httpContextAccessor;
+
+        public EventService(ApplicationDbContext dbContext, IHttpContextAccessor httpContextAccessor)
         {
             this.eventRepository = new EventRepository(dbContext);
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public EventDto Find(string id)
@@ -43,6 +46,10 @@ namespace EventRegistrationSystem.Services
                 Status = (int)Status.Active,
                 Latitude = model.Latitude,
                 Longitude = model.Longitude,
+                CreatedBy = GetUserName(),
+                CreatedDate = DateTime.UtcNow,
+                UpdatedBy = GetUserName(),
+                UpdatedDate = DateTime.UtcNow
             };
 
             eventRepository.Create(Event);
@@ -61,10 +68,14 @@ namespace EventRegistrationSystem.Services
             Event.Description = model.Description;
             Event.Latitude = model.Latitude;
             Event.Longitude = model.Longitude;
+            Event.UpdatedBy = GetUserName();
+            Event.UpdatedDate = DateTime.UtcNow;
             eventRepository.Update(Event);
             eventRepository.Save();
 
             return Event.Id;
         }
+
+        private string GetUserName() => httpContextAccessor != null ? httpContextAccessor.HttpContext.User.Identity.Name : string.Empty;
     }
 }

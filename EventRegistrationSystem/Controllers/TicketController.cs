@@ -13,10 +13,10 @@ namespace EventRegistrationSystem.Controllers
     {
         private readonly ILogger<TicketController> _logger;
         private readonly ITicketService ticketService;
-        public TicketController(ApplicationDbContext dbContext, ILogger<TicketController> logger)
+        public TicketController(ApplicationDbContext dbContext, IHttpContextAccessor httpContextAccessor, ILogger<TicketController> logger)
         {
             _logger = logger;
-            this.ticketService = new TicketService(dbContext);
+            this.ticketService = new TicketService(dbContext, httpContextAccessor);
         }
 
         [HttpGet("GetTicketById")]

@@ -19,7 +19,7 @@ namespace EventRegistrationSystem.Repositories
 
         public IQueryable<Event> List(DateTime? start, DateTime? end)
         {
-            var result =repo.Where(x => x.Status == (int)Status.Active);
+            var result = repo.Where(x => x.Status == (int)Status.Active);
             if (start.HasValue && end.HasValue)
             {
                 result.Where(x => x.StartDate >= start && x.EndDate <= end);
@@ -29,17 +29,11 @@ namespace EventRegistrationSystem.Repositories
 
         public void Create(Event model)
         {
-            model.CreatedBy = "Test";
-            model.CreatedDate = DateTime.UtcNow;
-            model.UpdatedBy = "Test";
-            model.UpdatedDate = DateTime.UtcNow;
             repo.Add(model);
         }
 
         public void Update(Event model)
         {
-            model.UpdatedBy = "Test";
-            model.UpdatedDate = DateTime.UtcNow;
             context.Entry(model).State = EntityState.Modified;
         }
 

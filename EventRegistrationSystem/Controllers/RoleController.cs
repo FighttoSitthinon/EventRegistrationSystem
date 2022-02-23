@@ -12,10 +12,10 @@ namespace EventRegistrationSystem.Controllers
     {
         private readonly ILogger<RoleController> _logger;
         private readonly IRoleService roleService;
-        public RoleController(ApplicationDbContext dbContext, ILogger<RoleController> logger)
+        public RoleController(ApplicationDbContext dbContext, IHttpContextAccessor httpContextAccessor, ILogger<RoleController> logger)
         {
             _logger = logger;
-            this.roleService = new RoleService(dbContext);
+            this.roleService = new RoleService(dbContext, httpContextAccessor);
         }
 
         [HttpPost("CreateRole")]

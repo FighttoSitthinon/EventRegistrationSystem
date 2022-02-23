@@ -44,8 +44,8 @@ namespace EventRegistrationSystem.Services.IServices
             var IsSamePassword = passwordManagement.CompareByteArrays(HashPassword, user.PasswordHash);
             if(!IsSamePassword) return string.Empty;
 
-            List<Role> roles = new List<Role>();
-            roles = userRoleRepository.ListByUserId(user.Id).ToList();
+            List<string> roles = new List<string>();
+            roles = userRoleRepository.ListRolesByUserId(user.Id).ToList();
 
             UserDto userDto = new UserDto(user, roles);
 

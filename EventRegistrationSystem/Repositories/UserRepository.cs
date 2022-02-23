@@ -32,8 +32,6 @@ namespace EventRegistrationSystem.Repositories
 
         public void Update(User model)
         {
-            model.UpdatedBy = "Test";
-            model.UpdatedDate = DateTime.UtcNow;
             context.Entry(model).State = EntityState.Modified;
         }
 

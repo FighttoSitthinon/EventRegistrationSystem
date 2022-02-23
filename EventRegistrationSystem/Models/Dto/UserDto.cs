@@ -9,10 +9,10 @@ namespace EventRegistrationSystem.Models.Dto
 
         }
 
-        public UserDto(User user, List<Role> roles)
+        public UserDto(User user, List<string> roles)
         {
             Id = user.Id;
-            Roles = roles.Select(x => x.Name).ToList();
+            Roles = roles;
             Email = user.Email;
         }
 

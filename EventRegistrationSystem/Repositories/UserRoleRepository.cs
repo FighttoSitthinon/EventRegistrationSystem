@@ -17,36 +17,27 @@ namespace EventRegistrationSystem.Repositories
 
         public UserRole GetById(string id) => repo.Where(x => x.Id == id && x.Status == (int)Status.Active).FirstOrDefault();
 
-        public IQueryable<Role> ListByUserId(string UserId)
+        public IQueryable<string> ListRolesByUserId(string UserId)
         {
             var userRoles = (
               from userRole in this.context.UserRoles 
               where userRole.UserId == UserId && userRole.Status == (int)Status.Active
               join role in this.context.Roles on userRole.RoleId equals role.Id
-              select role
+              select role.Name
             );
 
             return userRoles;
         }
 
-        public bool IsDuplicateUserRole(string UserId, string RoleId)
-        {
-            return repo.Where(x => x.UserId == UserId && x.RoleId == RoleId && x.Status == (int)Status.Active).Any();
-        }
+        public bool IsDuplicateUserRole(string UserId, string RoleId) => repo.Where(x => x.UserId == UserId && x.RoleId == RoleId && x.Status == (int)Status.Active).Any();
 
         public void Create(UserRole model)
         {
-            model.CreatedBy = "";
-            model.CreatedDate = DateTime.UtcNow;
-            model.UpdatedBy = "";
-            model.UpdatedDate = DateTime.UtcNow;
             repo.Add(model);
         }
 
         public void Update(UserRole model)
         {
-            model.UpdatedBy = "";
-            model.UpdatedDate = DateTime.UtcNow;
             context.Entry(model).State = EntityState.Modified;
         }
 

@@ -27,8 +27,6 @@ namespace EventRegistrationSystem.Repositories
 
         public void Create(Role model)
         {
-            model.CreatedBy = null;
-            model.CreatedDate = DateTime.UtcNow;
             repo.Add(model);
         }
 
