@@ -1,5 +1,6 @@
 using EventRegistrationSystem.Data;
 using EventRegistrationSystem.Services.IServices;
+using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,13 @@ using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+//builder.Services.AddControllersWithViews();
+//builder.Services.AddMvc(options =>
+//{
+//    options.Filters.Add(new ValidateAntiForgeryTokenAttribute());
+//});
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
@@ -44,13 +52,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddAntiforgery(options =>
-{
-    // Set Cookie properties using CookieBuilder properties†.
-    options.FormFieldName = "AntiforgeryFieldname";
-    options.HeaderName = "X-CSRF-TOKEN-HEADERNAME";
-    options.SuppressXFrameOptionsHeader = false;
-});
+//builder.Services.AddAntiforgery(options =>
+//{
+//    // Set Cookie properties using CookieBuilder properties†.\
+//    options.HeaderName = "X-XSRF-TOKEN";
+//    options.SuppressXFrameOptionsHeader = false;
+//});
 
 var app = builder.Build();
 
@@ -65,11 +72,28 @@ app.UseHttpsRedirection();
 
 //app.UseCors(x => x.AllowAnyHeader()
 //      .AllowAnyMethod()
-//      .WithOrigins("*"));
+//      .AllowCredentials()
+//      .WithOrigins(""));
 
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+//var antiforgery = app.Services.GetRequiredService<IAntiforgery>();
+
+//app.Use((context, next) =>
+//{
+//    var requestPath = context.Request.Path.Value;
+
+//    if (string.Equals(requestPath, "/", StringComparison.OrdinalIgnoreCase)
+//        || string.Equals(requestPath, "/index.html", StringComparison.OrdinalIgnoreCase))
+//    {
+//        var tokenSet = antiforgery.GetAndStoreTokens(context);
+//        context.Response.Cookies.Append("X-XSRF-TOKEN", tokenSet.RequestToken!, new CookieOptions { HttpOnly = false, Secure = true });
+//    }
+
+//    return next(context);
+//});
 
 app.MapControllers();
 
