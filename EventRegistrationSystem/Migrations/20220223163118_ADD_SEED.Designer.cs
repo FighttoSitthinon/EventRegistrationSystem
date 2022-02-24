@@ -4,6 +4,7 @@ using EventRegistrationSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventRegistrationSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220223163118_ADD_SEED")]
+    partial class ADD_SEED
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,38 +67,6 @@ namespace EventRegistrationSystem.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Events");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "533FEFD0-49FF-4E7F-8A72-8CF5073A3177",
-                            CreatedBy = "SYSTEM",
-                            CreatedDate = new DateTime(2022, 2, 24, 5, 10, 56, 171, DateTimeKind.Utc).AddTicks(1112),
-                            Description = "ต้อนรับความสุขในช่วงต้นปี ด้วยการชวนทุกคนมาสัมผัสบรรยากาศสุดอบอุ่นที่ “จริงใจ มาร์เก็ต เชียงใหม่” แหล่งรวมสินค้าทำมือ อาหารพื้นเมือง และวัฒนธรรมท้องถิ่น จากพ่อกาดแม่กาดที่ตั้งอกตั้งใจสร้างสรรค์สินค้าทำมือ ปลูกผักปลอดสาร และปรุงรสอาหารพื้นเมืองให้สะอาด อร่อย เหมือนทำให้คนในครอบครัวได้อิ่มอร่อยอย่างสุขใจ",
-                            EndDate = new DateTime(2022, 6, 4, 5, 10, 56, 171, DateTimeKind.Utc).AddTicks(1100),
-                            Latitude = 18.806058023549401,
-                            Longitude = 98.996183226269395,
-                            Name = "ช้อปงานคราฟต์ เสพงานศิลป์",
-                            StartDate = new DateTime(2022, 2, 24, 5, 10, 56, 171, DateTimeKind.Utc).AddTicks(1099),
-                            Status = 1,
-                            UpdatedBy = "SYSTEM",
-                            UpdatedDate = new DateTime(2022, 2, 24, 5, 10, 56, 171, DateTimeKind.Utc).AddTicks(1113)
-                        },
-                        new
-                        {
-                            Id = "5C8F38F5-5DFE-4F5D-8006-F9106A04A978",
-                            CreatedBy = "SYSTEM",
-                            CreatedDate = new DateTime(2022, 2, 24, 5, 10, 56, 171, DateTimeKind.Utc).AddTicks(1134),
-                            Description = "Join us in moving Thai contemporary art scene forward with Art Move: A Fundraising Exhibition for Bangkok Art and Culture Centre 2022, and acquire contemporary artworks by 49 leading Thai artists.",
-                            EndDate = new DateTime(2022, 9, 12, 5, 10, 56, 171, DateTimeKind.Utc).AddTicks(1129),
-                            Latitude = 13.746659899999999,
-                            Longitude = 100.53029960000001,
-                            Name = "Art Move : A Fundraising Exhibition for Bangkok Art and Culture Centre 2022",
-                            StartDate = new DateTime(2022, 6, 4, 5, 10, 56, 171, DateTimeKind.Utc).AddTicks(1128),
-                            Status = 1,
-                            UpdatedBy = "SYSTEM",
-                            UpdatedDate = new DateTime(2022, 2, 24, 5, 10, 56, 171, DateTimeKind.Utc).AddTicks(1136)
-                        });
                 });
 
             modelBuilder.Entity("EventRegistrationSystem.Models.Role", b =>
@@ -123,9 +93,9 @@ namespace EventRegistrationSystem.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2234597B-5CA5-414E-9A49-47C5E9D1BC9D",
+                            Id = "80E25A2D-267E-4ACF-B6F2-8908DF89ABC5",
                             CreatedBy = "SYSTEM",
-                            CreatedDate = new DateTime(2022, 2, 24, 5, 10, 56, 170, DateTimeKind.Utc).AddTicks(9572),
+                            CreatedDate = new DateTime(2022, 2, 23, 16, 31, 17, 931, DateTimeKind.Utc).AddTicks(3772),
                             Name = "ADMIN"
                         });
                 });
@@ -159,8 +129,8 @@ namespace EventRegistrationSystem.Migrations
 
                     b.Property<string>("TicketNumber")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
@@ -174,60 +144,6 @@ namespace EventRegistrationSystem.Migrations
                     b.HasIndex("EventId");
 
                     b.ToTable("Tickets");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1B83A892-06D0-4333-9E9B-7EFE159D55BE",
-                            CreatedBy = "SYSTEM",
-                            CreatedDate = new DateTime(2022, 2, 24, 5, 10, 56, 171, DateTimeKind.Utc).AddTicks(1223),
-                            Email = "test1@test01.com",
-                            EventId = "533FEFD0-49FF-4E7F-8A72-8CF5073A3177",
-                            PhoneNumber = "021234567",
-                            Status = 1,
-                            TicketNumber = "7D393E6F072D44C",
-                            UpdatedBy = "SYSTEM",
-                            UpdatedDate = new DateTime(2022, 2, 24, 5, 10, 56, 171, DateTimeKind.Utc).AddTicks(1225)
-                        },
-                        new
-                        {
-                            Id = "2C6482F0-CAEA-470F-8A0C-57C427B60BB4",
-                            CreatedBy = "SYSTEM",
-                            CreatedDate = new DateTime(2022, 2, 24, 5, 10, 56, 171, DateTimeKind.Utc).AddTicks(1378),
-                            Email = "test2@test02.com",
-                            EventId = "533FEFD0-49FF-4E7F-8A72-8CF5073A3177",
-                            PhoneNumber = "021256788",
-                            Status = 1,
-                            TicketNumber = "37C093A113E346E",
-                            UpdatedBy = "SYSTEM",
-                            UpdatedDate = new DateTime(2022, 2, 24, 5, 10, 56, 171, DateTimeKind.Utc).AddTicks(1379)
-                        },
-                        new
-                        {
-                            Id = "AF8503CC-37C0-4215-A810-73D9FC3ADA11",
-                            CreatedBy = "SYSTEM",
-                            CreatedDate = new DateTime(2022, 2, 24, 5, 10, 56, 171, DateTimeKind.Utc).AddTicks(1404),
-                            Email = "test1@test01.com",
-                            EventId = "5C8F38F5-5DFE-4F5D-8006-F9106A04A978",
-                            PhoneNumber = "021234567",
-                            Status = 1,
-                            TicketNumber = "1E257458D8584A1",
-                            UpdatedBy = "SYSTEM",
-                            UpdatedDate = new DateTime(2022, 2, 24, 5, 10, 56, 171, DateTimeKind.Utc).AddTicks(1405)
-                        },
-                        new
-                        {
-                            Id = "6A4E74FE-9930-4A1B-BECE-73BFEC01D970",
-                            CreatedBy = "SYSTEM",
-                            CreatedDate = new DateTime(2022, 2, 24, 5, 10, 56, 171, DateTimeKind.Utc).AddTicks(1425),
-                            Email = "test2@test02.com",
-                            EventId = "5C8F38F5-5DFE-4F5D-8006-F9106A04A978",
-                            PhoneNumber = "021256788",
-                            Status = 1,
-                            TicketNumber = "FD7BEBCDB4DD403",
-                            UpdatedBy = "SYSTEM",
-                            UpdatedDate = new DateTime(2022, 2, 24, 5, 10, 56, 171, DateTimeKind.Utc).AddTicks(1426)
-                        });
                 });
 
             modelBuilder.Entity("EventRegistrationSystem.Models.User", b =>
@@ -272,15 +188,15 @@ namespace EventRegistrationSystem.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1F71117E-AA5B-4A55-8BA5-916AC95825F6",
+                            Id = "0ECCCEC4-5684-4F5C-808C-C7254659ECE4",
                             CreatedBy = "SYSTEM",
-                            CreatedDate = new DateTime(2022, 2, 24, 5, 10, 56, 171, DateTimeKind.Utc).AddTicks(1000),
+                            CreatedDate = new DateTime(2022, 2, 23, 16, 31, 17, 931, DateTimeKind.Utc).AddTicks(5401),
                             Email = "ADMIN",
-                            PasswordHash = new byte[] { 71, 55, 243, 250, 95, 196, 120, 236, 3, 80, 236, 11, 174, 89, 202, 43, 97, 222, 127, 152, 253, 181, 16, 123, 25, 144, 128, 124, 99, 105, 176, 193 },
-                            PasswordSalt = new byte[] { 102, 98, 52, 101, 48, 48, 49, 100, 52, 56, 100, 100, 52, 50, 54, 98, 57, 56, 98, 53, 101, 99, 98, 54, 99, 48, 57, 57, 49, 99, 50, 57 },
+                            PasswordHash = new byte[] { 100, 52, 73, 66, 230, 20, 43, 55, 172, 124, 113, 199, 8, 24, 155, 129, 69, 137, 248, 51, 156, 117, 172, 79, 207, 87, 3, 183, 53, 252, 59, 155 },
+                            PasswordSalt = new byte[] { 48, 100, 49, 55, 55, 49, 97, 56, 101, 55, 98, 49, 52, 53, 57, 102, 57, 57, 53, 49, 100, 100, 48, 57, 57, 102, 98, 101, 48, 57, 100, 57 },
                             Status = 1,
                             UpdatedBy = "SYSTEM",
-                            UpdatedDate = new DateTime(2022, 2, 24, 5, 10, 56, 171, DateTimeKind.Utc).AddTicks(1002)
+                            UpdatedDate = new DateTime(2022, 2, 23, 16, 31, 17, 931, DateTimeKind.Utc).AddTicks(5402)
                         });
                 });
 
@@ -321,19 +237,6 @@ namespace EventRegistrationSystem.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "595B7B06-1A94-4B56-880A-161398C19491",
-                            CreatedBy = "SYSTEM",
-                            CreatedDate = new DateTime(2022, 2, 24, 5, 10, 56, 171, DateTimeKind.Utc).AddTicks(1059),
-                            RoleId = "2234597B-5CA5-414E-9A49-47C5E9D1BC9D",
-                            Status = 0,
-                            UpdatedBy = "SYSTEM",
-                            UpdatedDate = new DateTime(2022, 2, 24, 5, 10, 56, 171, DateTimeKind.Utc).AddTicks(1060),
-                            UserId = "1F71117E-AA5B-4A55-8BA5-916AC95825F6"
-                        });
                 });
 
             modelBuilder.Entity("EventRegistrationSystem.Models.Ticket", b =>

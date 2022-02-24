@@ -43,10 +43,13 @@ namespace EventRegistrationSystem.Services
 
         public string CreateTicket(TicketRegisterDto model)
         {
+
+            // validate duplicate email or phone
+
             Ticket role = new Ticket()
             {
                 Id = Guid.NewGuid().ToString().ToUpper(),
-                TicketNumber = Guid.NewGuid().ToString().Take(15).ToString().ToUpper(),
+                TicketNumber = Guid.NewGuid().ToString().Replace("-", "").ToUpper().Substring(0, 15),
                 Status = (int)Status.Active,
                 Email = model.Email,
                 PhoneNumber = model.PhoneNumber,

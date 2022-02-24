@@ -9,7 +9,7 @@ namespace EventRegistrationSystem.Models
         [Required]
         public string Id { get; set; }
         [Required]
-        [MaxLength(10)]
+        [MaxLength(15)]
         public string TicketNumber { get; set; }
         [Required]
         [ForeignKey("Event")]
