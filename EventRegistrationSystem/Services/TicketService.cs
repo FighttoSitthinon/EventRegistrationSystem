@@ -43,8 +43,9 @@ namespace EventRegistrationSystem.Services
 
         public string CreateTicket(TicketRegisterDto model)
         {
-
             // validate duplicate email or phone
+            bool duplicate = ticketRepository.IsUserAlreadyRegisterEvent(model.EventId, model.Email, model.PhoneNumber);
+            if (duplicate) return null;
 
             Ticket role = new Ticket()
             {

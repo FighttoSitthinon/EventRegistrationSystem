@@ -6,6 +6,7 @@ namespace EventRegistrationSystem.Repositories.IRepositories
     {
         Ticket Get(string id);
         Ticket GetByTicketNumber(string TicketNumber);
+        bool IsUserAlreadyRegisterEvent(string EventId, string Email, string PhoneNumber);
         IQueryable<Ticket> List(string eventId);
         void Create(Ticket model);
         void Update(Ticket model);

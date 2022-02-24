@@ -9,42 +9,11 @@ namespace EventRegistrationSystem.Services
     public class RoleService : IRoleService
     {
         public readonly IRoleRepository roleRepository;
-        public readonly IUserRoleRepository userRoleRepository;
-        public readonly IUserRepository userRepository;
-
         private readonly IHttpContextAccessor httpContextAccessor;
         public RoleService(ApplicationDbContext dbContext, IHttpContextAccessor httpContextAccessor)
         {
             this.roleRepository = new RoleRepository(dbContext);
-            this.userRoleRepository = new UserRoleRepository(dbContext);
-            this.userRepository = new UserRepository(dbContext);
             this.httpContextAccessor = httpContextAccessor;
-        }
-
-        public string AddRole(string roleId, string UserName)
-        {
-            var user = userRepository.GetByEmail(UserName);
-            if (user == null) return String.Empty;
-
-            UserRole model = new UserRole()
-            {
-                Id = Guid.NewGuid().ToString().ToUpper(),
-                RoleId = roleId,
-                UserId = user.Id,
-                Status = (int)Status.Active,
-                CreatedBy = GetUserName(),
-                CreatedDate = DateTime.UtcNow,
-                UpdatedBy = GetUserName(),
-                UpdatedDate = DateTime.UtcNow,
-            };
-
-            bool IsDuplicate = userRoleRepository.IsDuplicateUserRole(model.UserId, model.RoleId);
-            if (IsDuplicate) return String.Empty;
-
-            userRoleRepository.Create(model);
-            roleRepository.Save();
-
-            return model.Id;
         }
 
         public string Create(string roleName)
