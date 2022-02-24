@@ -1,4 +1,4 @@
-﻿## Event Registration System [ERS] - .NET 6 API
+﻿# Event Registration System [ERS] - .NET 6 API
 
 ## SETUP
 
@@ -23,23 +23,26 @@ Code first will generate database and provide starter data in your database.
 
 ![database image](https://i.ibb.co/QdNGT1p/ERS.png)
 
-## TEST DATA
-User (1 row) - user Admin for test
-    username: ADMIN
-    password: 12345678
+URL: https://dbdiagram.io/d/621724de485e4335430b6f4d
 
-Roles (1 row)
-    - ADMIN
+## MOCKUP DATA (FOR TEST)
+### **User (1 row)** - _user Admin for test_ <br>
 
-UserRoles (1 row)
-    - User="ADMIN", Role="ADMIN"
+        username: ADMIN 
+        password: 12345678 
 
-Events (2 rows)
-    1. "ช้อปงานคราฟต์ เสพงานศิลป์"
-    2. "Art Move : A Fundraising Exhibition for Bangkok Art and Culture Centre 2022"
+### **Roles (1 row)** <br>
+* ADMIN <br>
 
-Tickets (4 rows)
-    1. TicketNumber="7D393E6F072D44C", Email="test1@test01.com", PhoneNumber="021234567", Event="ช้อปงานคราฟต์ เสพงานศิลป์"
-    2. TicketNumber="37C093A113E346E", Email="test2@test02.com", PhoneNumber="021256788", Event="ช้อปงานคราฟต์ เสพงานศิลป์"
-    3. TicketNumber="FD7BEBCDB4DD403", Email="test2@test02.com", PhoneNumber="021256788", Event="Art Move : A Fundraising Exhibition for Bangkok Art and Culture Centre 2022"
-    4. TicketNumber="1E257458D8584A1", Email="test1@test01.com", PhoneNumber="021234567", Event="Art Move : A Fundraising Exhibition for Bangkok Art and Culture Centre 2022"
+### **UserRoles (1 row)** <br>
+* User="ADMIN", Role="ADMIN" <br>
+
+### **Events (2 rows)** <br>
+1. "ช้อปงานคราฟต์ เสพงานศิลป์" <br>
+2. "Art Move : A Fundraising Exhibition for Bangkok Art and Culture Centre 2022" <br>
+
+### **Tickets (4 rows)** <br>
+1. TicketNumber="7D393E6F072D44C", Email="test1@test01.com", PhoneNumber="021234567", Event="ช้อปงานคราฟต์ เสพงานศิลป์" <br>
+2. TicketNumber="37C093A113E346E", Email="test2@test02.com", PhoneNumber="021256788", Event="ช้อปงานคราฟต์ เสพงานศิลป์" <br>
+3. TicketNumber="FD7BEBCDB4DD403", Email="test2@test02.com", PhoneNumber="021256788", Event="Art Move : A Fundraising Exhibition for Bangkok Art and Culture Centre 2022" <br>
+4. TicketNumber="1E257458D8584A1", Email="test1@test01.com", PhoneNumber="021234567", Event="Art Move : A Fundraising Exhibition for Bangkok Art and Culture Centre 2022" <br>
