@@ -21,6 +21,7 @@ namespace EventRegistrationSystem.Services
         public TicketDto FindById(string Id)
         {
             var ticket = ticketRepository.Get(Id);
+            if (ticket == null) return null;
 
             return new TicketDto(ticket);
         }
@@ -28,6 +29,7 @@ namespace EventRegistrationSystem.Services
         public TicketDto FindByTicketNumber(string TicketNumber)
         {
             var ticket = ticketRepository.GetByTicketNumber(TicketNumber);
+            if (ticket == null) return null;
 
             return new TicketDto(ticket);
         }
@@ -37,6 +39,7 @@ namespace EventRegistrationSystem.Services
             int pageSize = 12;
 
             var query = ticketRepository.List(eventId).Select(x => new TicketDto(x));
+            if (query == null) return null;
 
             return PagedList<TicketDto>.ToPagedList(query, page, pageSize);
         }

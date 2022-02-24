@@ -44,8 +44,7 @@ namespace EventRegistrationSystem.Services.IServices
             var IsSamePassword = passwordManagement.CompareByteArrays(HashPassword, user.PasswordHash);
             if(!IsSamePassword) return string.Empty;
 
-            List<string> roles = new List<string>();
-            roles = userRoleRepository.ListRolesByUserId(user.Id).ToList();
+            var roles = userRoleRepository.ListRolesByUserId(user.Id).ToList();
 
             UserDto userDto = new UserDto(user, roles);
 
@@ -58,17 +57,6 @@ namespace EventRegistrationSystem.Services.IServices
 
         public string Register(LoginDto model)
         {
-            /*
-                At least one upper case English letter, (?=.*?[A-Z])
-                At least one lower case English letter, (?=.*?[a-z])
-                At least one digit, (?=.*?[0-9])
-                At least one special character, (?=.*?[#?!@$%^&*-])
-                Minimum eight in length .{8,} (with the anchors)
-            */
-            string strRegex = @"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
-            Regex re = new Regex(strRegex);
-            if (!re.IsMatch(model.Password)) return string.Empty;
-
             bool IsUserExisted = userRepository.IsUserExisted(model.Email);
             if (IsUserExisted) return string.Empty;
 

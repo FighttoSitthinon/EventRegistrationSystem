@@ -27,11 +27,14 @@ namespace EventRegistrationSystem.BusinessLogics
                 new Claim(ClaimTypes.Email, user.Email),
             });
 
-            foreach (var role in user.Roles)
+            if (user.Roles != null)
             {
-                Claims.AddClaim(new Claim(ClaimTypes.Role, role));
+                foreach (var role in user.Roles)
+                {
+                    Claims.AddClaim(new Claim(ClaimTypes.Role, role));
+                }
             }
-
+            
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = Claims,

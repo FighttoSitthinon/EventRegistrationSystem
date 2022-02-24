@@ -13,10 +13,12 @@ namespace EventRegistrationSystem.Controllers
     {
         private readonly ILogger<TicketController> _logger;
         private readonly ITicketService ticketService;
+        private readonly IEventService eventService;
         public TicketController(ApplicationDbContext dbContext, IHttpContextAccessor httpContextAccessor, ILogger<TicketController> logger)
         {
             _logger = logger;
             this.ticketService = new TicketService(dbContext, httpContextAccessor);
+            this.eventService = new EventService(dbContext, httpContextAccessor);
         }
 
         [HttpGet("GetTicketById")]
@@ -24,6 +26,8 @@ namespace EventRegistrationSystem.Controllers
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(Id)) return null;
+
                 var Ticket = ticketService.FindById(Id);
 
                 return Ticket;
@@ -39,6 +43,8 @@ namespace EventRegistrationSystem.Controllers
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(TicketNumber)) return null;
+
                 var Ticket = ticketService.FindByTicketNumber(TicketNumber);
 
                 return Ticket;
@@ -55,6 +61,8 @@ namespace EventRegistrationSystem.Controllers
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(EventId)) return null;
+
                 var Tickets = ticketService.List(EventId, page);
 
                 return Tickets;
@@ -70,13 +78,16 @@ namespace EventRegistrationSystem.Controllers
         {
             try
             {
-                if (!ModelState.IsValid) throw new Exception();
+                if (!ModelState.IsValid) return BadRequest("Fields Required");
 
-                if (string.IsNullOrEmpty(model.Email) && string.IsNullOrEmpty(model.PhoneNumber)) throw new Exception("Email or Phone Number is Required.");
+                if (string.IsNullOrEmpty(model.Email) && string.IsNullOrEmpty(model.PhoneNumber)) return BadRequest("Email or Phone Number is Required.");
+
+                var Event = eventService.Find(model.EventId);
+                if (Event == null) return NotFound();
+                if (Event.EndDate < DateTime.UtcNow) return BadRequest("Event already expired.");
 
                 string TicketNumber = ticketService.CreateTicket(model);
-
-                if (string.IsNullOrWhiteSpace(TicketNumber)) throw new Exception();
+                if (string.IsNullOrWhiteSpace(TicketNumber)) return BadRequest("User already register this event");
 
                 return Ok(TicketNumber);
             }

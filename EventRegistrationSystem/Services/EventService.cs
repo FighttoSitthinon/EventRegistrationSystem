@@ -21,6 +21,7 @@ namespace EventRegistrationSystem.Services
         public EventDto Find(string id)
         {
             var result = eventRepository.Get(id);
+            if (result == null) return null;
 
             return new EventDto(result);
         }
@@ -30,6 +31,7 @@ namespace EventRegistrationSystem.Services
             int pageSize = 12;
 
             var query = eventRepository.List(start, end).Select(x => new EventDto(x));
+            if (query == null) return null;
 
             return PagedList<EventDto>.ToPagedList(query, page, pageSize);
         }

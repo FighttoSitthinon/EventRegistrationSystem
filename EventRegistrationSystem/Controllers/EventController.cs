@@ -77,11 +77,11 @@ namespace EventRegistrationSystem.Controllers
         {
             try
             {
-                if (!ModelState.IsValid) throw new Exception();
+                if (!ModelState.IsValid) return BadRequest("Fields Required");
 
                 string id = eventService.Create(model);
 
-                if (string.IsNullOrWhiteSpace(id)) throw new Exception();
+                if (string.IsNullOrWhiteSpace(id)) return BadRequest();
 
                 return Ok(id);
             }
@@ -97,8 +97,10 @@ namespace EventRegistrationSystem.Controllers
         {
             try
             {
-                string id = eventService.Create(model);
-                if (string.IsNullOrWhiteSpace(id)) throw new Exception();
+                string id = eventService.Update(model);
+
+                if (string.IsNullOrWhiteSpace(id)) return BadRequest();
+
                 return Ok(id);
             }
             catch (Exception ex)

@@ -24,11 +24,11 @@ namespace EventRegistrationSystem.Controllers
         {
             try
             {
-                if (!ModelState.IsValid) throw new Exception();
+                if (!ModelState.IsValid) return BadRequest("Fields Required");
 
                 string id = roleService.Create(roleName);
 
-                if (string.IsNullOrWhiteSpace(id)) throw new Exception();
+                if (string.IsNullOrWhiteSpace(id)) return BadRequest();
 
                 return Ok(id);
             }
@@ -44,8 +44,6 @@ namespace EventRegistrationSystem.Controllers
         {
             try
             {
-                if (!ModelState.IsValid) throw new Exception();
-
                 var roles = roleService.GetAll();
 
                 return Ok(roles);

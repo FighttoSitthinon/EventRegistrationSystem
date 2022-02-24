@@ -22,11 +22,11 @@ namespace EventRegistrationSystem.Controllers
         {
             try
             {
-                if (!ModelState.IsValid) throw new Exception();
+                if (!ModelState.IsValid) return BadRequest("Fields Required");
 
                 var roles = userRoleService.AddRole(UserId, RoleId);
 
-                if (string.IsNullOrEmpty(roles)) throw new Exception();
+                if (string.IsNullOrEmpty(roles)) return BadRequest();
 
                 return Ok(roles);
             }
